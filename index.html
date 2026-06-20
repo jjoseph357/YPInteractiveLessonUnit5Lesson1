@@ -423,7 +423,8 @@
             <div class="outline-point-box">
                 <span class="point-label">II. In Abraham, God chose a new race...</span>
                 <div style="margin-top:8px;"><strong>A.</strong> God chose and called Abraham out of the land of idols
-                    <span class="verse">-Gen. 12:1-3</span></div>
+                    <span class="verse">-Gen. 12:1-3</span>
+                </div>
                 <div style="margin-top:8px;"><strong>B.</strong> They continually turned away from God, resulting in
                     captivity <span class="verse">-Neh. 9:24-30; 2 Chron. 36:14-16</span></div>
             </div>
@@ -465,7 +466,8 @@
                 Persia, to issue a decree: "Go back. Rebuild the house of God."</p>
             <p class="body-text">When they arrived in Jerusalem, the city was in ruins. Weeds everywhere.</p>
             <p class="body-text">The first thing they rebuilt wasn't a wall or houses. It was the
-                <strong>altar</strong>. Worship came first.</p>
+                <strong>altar</strong>. Worship came first.
+            </p>
             <p class="body-text">Then they laid the temple foundation. Some wept. Some shouted for joy. <strong>Recovery
                     had begun.</strong></p>
         </div>
@@ -577,7 +579,8 @@
             <div class="header-tag">The Gospel & Application</div>
             <h1>He doesn't throw broken things away.</h1>
             <p class="body-text">Man is fallen and separated from God — like Israel in captivity. But God prepared a
-                <strong>complete salvation</strong>:</p>
+                <strong>complete salvation</strong>:
+            </p>
             <p class="body-text"><strong>Judicially:</strong> He redeemed us with the blood of Christ. The legal price
                 was paid.</p>
             <p class="body-text"><strong>Organically:</strong> He saves us in our disposition through the Holy Spirit.
@@ -639,12 +642,30 @@
         });
 
         // Tab Visibility API (For students with phones)
+        let didTabSwitch = false;
+        const banner = document.getElementById('tab-banner');
+        let bannerTimeout;
+
         document.addEventListener('visibilitychange', () => {
-            const banner = document.getElementById('tab-banner');
             if (document.hidden) {
-                banner.classList.add('show');
+                // The user just left the tab (went to Instagram, etc.)
+                didTabSwitch = true;
             } else {
-                banner.classList.remove('show');
+                // The user just came back to the tab
+                if (didTabSwitch) {
+                    didTabSwitch = false; // Reset the flag
+
+                    // Show the banner
+                    banner.classList.add('show');
+
+                    // Clear any existing timeout (in case they switch back and forth quickly)
+                    clearTimeout(bannerTimeout);
+
+                    // Hide the banner after 4 seconds (4000 milliseconds)
+                    bannerTimeout = setTimeout(() => {
+                        banner.classList.remove('show');
+                    }, 4000);
+                }
             }
         });
 
