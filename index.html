@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The God of Recovery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0d0804;
+            --bg-mid: #1a0f06;
+            --gold: #e8b84a;
+            --gold-bright: #ffd166;
+            --ember: #c4632a;
+            --cream: #f5ead4;
+            --muted: #9a8a6e;
+            --green: #7a9e4a;
+            --red-warn: #d4573a;
+            --card-bg: rgba(42, 26, 10, 0.85);
+            --card-border: rgba(232, 184, 74, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-deep);
+            color: var(--cream);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Tab Switch Banner */
+        #tab-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(196, 99, 42, 0.95);
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.4s;
+        }
+
+        #tab-banner.show {
+            transform: translateY(0);
+        }
+
+        /* Main Display */
+        #display {
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px 100px;
+            flex-grow: 1;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-tag {
+            display: inline-block;
+            background: rgba(232, 184, 74, 0.1);
+            border: 1px solid var(--card-border);
+            color: var(--gold);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--gold-bright);
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        h1 .accent {
+            color: var(--ember);
+            font-style: italic;
+        }
+
+        h2 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        p,
+        .body-text {
+            font-size: 18px;
+            color: var(--cream);
+            opacity: 0.9;
+            margin-bottom: 16px;
+            line-height: 1.75;
+        }
+
+        .body-text strong {
+            color: var(--gold-bright);
+            font-weight: 600;
+        }
+
+        .body-text em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        /* Outline Box */
+        .outline-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--cream);
+        }
+
+        .outline-box h3 {
+            color: var(--gold-bright);
+            font-family: 'Fraunces', serif;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .outline-box .verse {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .outline-box .point {
+            margin-bottom: 12px;
+        }
+
+        .outline-box .subpoint {
+            padding-left: 20px;
+            margin-bottom: 8px;
+            color: rgba(245, 234, 212, 0.85);
+        }
+
+        /* Quizzes */
+        .quiz-question {
+            font-family: 'Fraunces', serif;
+            font-size: 24px;
+            color: var(--cream);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quiz-option {
+            background: rgba(245, 234, 212, 0.04);
+            border: 2px solid rgba(232, 184, 74, 0.15);
+            border-radius: 14px;
+            padding: 18px 24px;
+            color: var(--cream);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.25s;
+            text-align: left;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--gold);
+            background: rgba(232, 184, 74, 0.08);
+            transform: scale(1.02);
+        }
+
+        .quiz-option .letter {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(232, 184, 74, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .quiz-option.revealed-correct {
+            border-color: var(--green);
+            background: rgba(122, 158, 74, 0.15);
+            pointer-events: none;
+        }
+
+        .quiz-option.revealed-correct .letter {
+            background: var(--green);
+            color: var(--bg-deep);
+        }
+
+        .quiz-option.revealed-wrong {
+            border-color: var(--red-warn);
+            background: rgba(212, 87, 58, 0.1);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Navigation Arrows */
+        #nav {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 100;
+            background: rgba(13, 8, 4, 0.9);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--gold);
+            color: var(--gold-bright);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--gold);
+            color: var(--bg-deep);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Page Indicator */
+        #page-indicator {
+            color: var(--muted);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="tab-banner">📱 TAB SWITCH DETECTED 📱</div>
+
+    <div id="display">
+
+        <!-- PAGE 0: Title & Outline -->
+        <div class="page active" id="page-0">
+            <div class="header-tag">Unit 5 · Lesson 1 · Ezra 1-3</div>
+            <h1>The God of <span class="accent">Recovery</span></h1>
+            <p class="body-text">God doesn't throw broken things away. He recovers them. He restores them. He rebuilds.
+            </p>
+
+            <div class="outline-box" style="margin-top: 30px;">
+                <h3>Lesson Outline</h3>
+                <div class="point"><strong>I. God is a God of recovery</strong> <span class="verse">-Gen. 1:1-3; Ezra
+                        9:9</span></div>
+
+                <div class="point"><strong>II. In Abraham, God chose a new race to be His corporate expression on the
+                        earth</strong></div>
+                <div class="subpoint"><strong>A.</strong> God chose and called Abraham out of the land of idols <span
+                        class="verse">-Gen. 12:1-3; 13:14-17</span></div>
+                <div class="subpoint"><strong>B.</strong> They continually turned away from God, resulting in captivity
+                    <span class="verse">-Neh. 9:24-30; 2 Chron. 36:14-16</span></div>
+                <div class="subpoint" style="padding-left: 40px;">1. God called Israel out of Egypt into the good land
+                    <span class="verse">-Exo. 6:6-8</span></div>
+                <div class="subpoint" style="padding-left: 40px;">2. They followed idols and became divided <span
+                        class="verse">-1 Kings 12:26-30</span></div>
+                <div class="subpoint" style="padding-left: 40px;">3. Sank to the lowest condition, like the Canaanites
+                    <span class="verse">-2 Kings 17:7-23</span></div>
+                <div class="subpoint" style="padding-left: 40px;">4. Carried off into captivity <span class="verse">-2
+                        Kings 24-25</span></div>
+                <div class="subpoint"><strong>C.</strong> God recovered His people back to the land <span
+                        class="verse">-Ezra 1:1-4</span></div>
+
+                <div class="point"><strong>III. The reality of God's recovery is the recovery of the church</strong>
+                </div>
+                <div class="subpoint"><strong>A.</strong> God established the church <span class="verse">-Eph. 1:23;
+                        2:19-22</span></div>
+                <div class="subpoint"><strong>B.</strong> The church fell into degradation and division <span
+                        class="verse">-1 Cor. 1:10-13</span></div>
+                <div class="subpoint"><strong>C.</strong> The Lord came in to recover the church <span
+                        class="verse">-Ezra 3:1, 10-12</span></div>
+
+                <div class="point"><strong>IV. We are in the Lord's recovery today</strong></div>
+            </div>
+        </div>
+
+        <!-- PAGE 1: Hook -->
+        <div class="page" id="page-1">
+            <div class="header-tag">Opening Hook</div>
+            <h2>What's the worst thing you've ever lost?</h2>
+            <p class="body-text">When I was in junior high, I lost my phone at a theme park. I spent <strong>three
+                    hours</strong> retracing my steps. Pure panic. Eventually, lost-and-found had it. I held that phone
+                like a newborn baby. I promised it I'd never let go again.</p>
+            <p class="body-text"><strong>I dropped it in a lake the next week.</strong> 📱💧</p>
+            <p class="body-text">Today we're talking about God as a <strong>God of recovery</strong>. He doesn't lose
+                phones — but He does lose people. And what He recovers is <em>way</em> more valuable.</p>
+        </div>
+
+        <!-- PAGE 2: Point I -->
+        <div class="page" id="page-2">
+            <div class="header-tag">Point I</div>
+            <h1>God is a God of <span class="accent">Recovery</span></h1>
+            <p class="body-text">In Genesis 1, the earth <strong>became</strong> waste and emptiness. Darkness was over
+                the deep.</p>
+            <p class="body-text">God didn't throw the planet in the cosmic trash. He <strong>recovered</strong> it. He
+                spoke light into the darkness.</p>
+            <p class="body-text"><em>Ezra 9:9</em> - "God has not forsaken us... but has extended lovingkindness to
+                us... to give us a reviving to raise up the house of our God."</p>
+            <p class="body-text">If God's nature is to recover, what does that tell you about what He wants to do with
+                YOUR life when you mess up?</p>
+        </div>
+
+        <!-- PAGE 3: Point IIA & IIB -->
+        <div class="page" id="page-3">
+            <div class="header-tag">Point II.A & II.B</div>
+            <h2>From Abraham to Captivity</h2>
+            <p class="body-text"><strong>Abraham:</strong> Called out of Ur (a city of idols) to a new land to be God's
+                people.</p>
+            <p class="body-text"><strong>Egypt to the Good Land:</strong> Israel was enslaved, but God rescued them
+                through Moses and brought them to the promised land.</p>
+            <p class="body-text"><strong>The Fall:</strong> Once in the land, they followed after idols. The kingdom
+                split in two (North and South).</p>
+            <p class="body-text"><strong>The Lowest Condition:</strong> They became no different than the Canaanites God
+                told them to replace.</p>
+            <p class="body-text"><strong>Captivity:</strong> Babylon came. The temple was destroyed. Jerusalem became a
+                ghost town. The chosen race was carried off in chains.</p>
+        </div>
+
+        <!-- PAGE 4: Quiz 1 -->
+        <div class="page" id="page-4">
+            <div class="header-tag">Interactive Check 1</div>
+            <div class="quiz-question">What caused Israel to be carried off into captivity?</div>
+            <div class="quiz-options" id="quiz1">
+                <div class="quiz-option" data-correct="false"><span class="letter">A</span> They ran out of food</div>
+                <div class="quiz-option" data-correct="true"><span class="letter">B</span> Idol worship and division
+                </div>
+                <div class="quiz-option" data-correct="false"><span class="letter">C</span> They lost a war with Egypt
+                </div>
+                <div class="quiz-option" data-correct="false"><span class="letter">D</span> God changed His mind</div>
+            </div>
+        </div>
+
+        <!-- PAGE 5: Point IIC -->
+        <div class="page" id="page-5">
+            <div class="header-tag">Point II.C</div>
+            <h1>The Return: <span class="accent">Ezra 1-3</span></h1>
+            <p class="body-text">70 years of captivity. Then God stirs up a <strong>pagan king</strong>, Cyrus of
+                Persia, to issue a decree: "Go back. Rebuild the house of God."</p>
+            <p class="body-text">When they arrived in Jerusalem, the city was in ruins. Weeds everywhere.</p>
+            <p class="body-text">The first thing they rebuilt wasn't a wall or houses. It was the
+                <strong>altar</strong>. Worship came first.</p>
+            <p class="body-text">Then they laid the temple foundation. Some wept. Some shouted for joy. <strong>Recovery
+                    had begun.</strong></p>
+        </div>
+
+        <!-- PAGE 6: Quiz 2 -->
+        <div class="page" id="page-6">
+            <div class="header-tag">Interactive Check 2</div>
+            <div class="quiz-question">What was the FIRST thing the returned Israelites rebuilt?</div>
+            <div class="quiz-options" id="quiz2">
+                <div class="quiz-option" data-correct="false"><span class="letter">A</span> The city wall</div>
+                <div class="quiz-option" data-correct="false"><span class="letter">B</span> Their houses</div>
+                <div class="quiz-option" data-correct="true"><span class="letter">C</span> The altar (worship came
+                    first)</div>
+                <div class="quiz-option" data-correct="false"><span class="letter">D</span> The king's palace</div>
+            </div>
+        </div>
+
+        <!-- PAGE 7: Point III -->
+        <div class="page" id="page-7">
+            <div class="header-tag">Point III</div>
+            <h1>The Reality: <span class="accent">The Church</span></h1>
+            <p class="body-text">The Old Testament is a picture. The reality is the <strong>church</strong>.</p>
+            <p class="body-text"><strong>Established:</strong> God established the church as His true habitation.</p>
+            <p class="body-text"><strong>Degraded:</strong> The church fell. Christ was replaced by good works, dead
+                knowledge, the clergy-laity system, and division. This divided system is <strong>Babylon the
+                    Great</strong>.</p>
+            <p class="body-text">Pursuing anything other than Christ is <strong>idolatry</strong>. And idolatry
+                scatters.</p>
+        </div>
+
+        <!-- PAGE 8: Quiz 3 -->
+        <div class="page" id="page-8">
+            <div class="header-tag">Interactive Check 3 (Select ALL)</div>
+            <div class="quiz-question">What things came in to replace Christ in the degraded church?</div>
+            <div class="quiz-options" id="quiz3">
+                <div class="quiz-option" data-correct="true"><span class="letter">A</span> Dead knowledge</div>
+                <div class="quiz-option" data-correct="true"><span class="letter">B</span> Clergy-laity system</div>
+                <div class="quiz-option" data-correct="true"><span class="letter">C</span> Superstition & ritual</div>
+                <div class="quiz-option" data-correct="true"><span class="letter">D</span> Good works apart from Christ
+                </div>
+                <div class="quiz-option" data-correct="false"><span class="letter">E</span> Reading the Bible too much
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 9: Point IV -->
+        <div class="page" id="page-9">
+            <div class="header-tag">Point IV</div>
+            <h1>We are in the Lord's <span class="accent">Recovery Today</span></h1>
+            <p class="body-text">Since the 1500s, the Lord has been recovering truth.</p>
+            <p class="body-text">In <strong>1922</strong>, Watchman Nee and others left divisive groups to meet on the
+                <strong>ground of oneness</strong> — just as Israel left Babylon for Jerusalem.</p>
+            <p class="body-text">We aren't starting a new denomination. We are <strong>returning</strong> to the
+                original ground.</p>
+            <p class="body-text"><em>The Jews waited 2,600 years to return to Israel as a nation. The ground was weedy,
+                    but they came back. Now we are clearing the weeds of tradition and building on the original
+                    foundation.</em></p>
+        </div>
+
+        <!-- PAGE 10: Quiz 4 -->
+        <div class="page" id="page-10">
+            <div class="header-tag">Interactive Check 4</div>
+            <div class="quiz-question">What year did Watchman Nee begin meeting on the ground of oneness?</div>
+            <div class="quiz-options" id="quiz4">
+                <div class="quiz-option" data-correct="false"><span class="letter">A</span> 1517</div>
+                <div class="quiz-option" data-correct="false"><span class="letter">B</span> 1789</div>
+                <div class="quiz-option" data-correct="true"><span class="letter">C</span> 1922</div>
+                <div class="quiz-option" data-correct="false"><span class="letter">D</span> 2024</div>
+            </div>
+        </div>
+
+        <!-- PAGE 11: Closing -->
+        <div class="page" id="page-11">
+            <div class="header-tag">The Gospel & Application</div>
+            <h1>He doesn't throw broken things away.</h1>
+            <p class="body-text">Man is fallen and separated from God — like Israel in captivity. But God prepared a
+                <strong>complete salvation</strong>:</p>
+            <p class="body-text"><strong>Judicially:</strong> He redeemed us with the blood of Christ. The legal price
+                was paid.</p>
+            <p class="body-text"><strong>Organically:</strong> He saves us in our disposition through the Holy Spirit.
+                He changes us from the inside out.</p>
+            <p class="body-text">Blood redeems. Spirit transforms. That's the complete recovery.</p>
+            <div
+                style="margin-top: 40px; padding: 24px; background: rgba(232, 184, 74, 0.06); border-left: 4px solid var(--gold); border-radius: 0 12px 12px 0;">
+                <strong style="color: var(--gold-bright);">This week:</strong> Identify one "idol" — one thing that's
+                been replacing Christ in your life. Ask the Lord to recover that area. He's the God of recovery. He
+                doesn't give up on what's broken.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <div id="nav">
+        <button class="nav-btn" id="prev-btn" onclick="changePage(-1)">←</button>
+        <div id="page-indicator">1 / 12</div>
+        <button class="nav-btn" id="next-btn" onclick="changePage(1)">→</button>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const totalPages = document.querySelectorAll('.page').length;
+
+        function updateIndicator() {
+            document.getElementById('page-indicator').textContent = `${currentPage + 1} / ${totalPages}`;
+            document.getElementById('prev-btn').disabled = (currentPage === 0);
+            document.getElementById('next-btn').disabled = (currentPage === totalPages - 1);
+        }
+
+        function changePage(direction) {
+            const pages = document.querySelectorAll('.page');
+            pages[currentPage].classList.remove('active');
+            currentPage += direction;
+            if (currentPage < 0) currentPage = 0;
+            if (currentPage >= totalPages) currentPage = totalPages - 1;
+            pages[currentPage].classList.add('active');
+            updateIndicator();
+            window.scrollTo(0, 0);
+        }
+
+        // Quiz Click Logic (For Teacher to reveal answers)
+        document.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                // Remove any previous reveals on this specific option
+                opt.classList.remove('revealed-correct', 'revealed-wrong');
+
+                // Force reflow to restart animation if needed
+                void opt.offsetWidth;
+
+                if (opt.dataset.correct === 'true') {
+                    opt.classList.add('revealed-correct');
+                } else {
+                    opt.classList.add('revealed-wrong');
+                }
+            });
+        });
+
+        // Tab Visibility API (For students with phones)
+        document.addEventListener('visibilitychange', () => {
+            const banner = document.getElementById('tab-banner');
+            if (document.hidden) {
+                banner.classList.add('show');
+            } else {
+                banner.classList.remove('show');
+            }
+        });
+
+        // Init
+        updateIndicator();
+    </script>
+
+</body>
+
+</html>
