@@ -438,7 +438,7 @@
             <p class="body-text">God didn't throw the planet in the cosmic trash. He <strong>recovered</strong> it. He
                 spoke light into the darkness.</p>
             <p class="body-text"><em>Ezra 9:9</em> - "God has not forsaken us in our bondage but has extended
-                lovingkindness to us in the sight of the kings of Persia, to give us a reviving, to raise up the ahouse
+                lovingkindness to us in the sight of the kings of Persia, to give us a reviving, to raise up the house
                 of our God and to repair its ruins, and to give us a wall in Judah and in Jerusalem.
                 "</p>
             <p class="body-text"><em>Genesis 1:1-3</em> - "In the beginning God created the heavens and the
@@ -643,9 +643,14 @@
             </div>
 
             <!-- Teacher Stats Area -->
-            <div style="margin-top: 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px;">
-                <button class="nav-btn" style="width: auto; padding: 0 20px; border-radius: 25px; margin: 0 auto; font-family: 'Outfit', sans-serif;" onclick="viewTabStats()">Teacher: View Tab Stats</button>
-                <div id="stats-results" style="margin-top: 20px; display: none; text-align: left; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; font-family: 'Outfit', sans-serif;"></div>
+            <div
+                style="margin-top: 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px;">
+                <button class="nav-btn"
+                    style="width: auto; padding: 0 20px; border-radius: 25px; margin: 0 auto; font-family: 'Outfit', sans-serif;"
+                    onclick="viewTabStats()">Teacher: View Tab Stats</button>
+                <div id="stats-results"
+                    style="margin-top: 20px; display: none; text-align: left; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; font-family: 'Outfit', sans-serif;">
+                </div>
             </div>
         </div>
 
@@ -759,7 +764,7 @@
             try {
                 const studentRef = doc(db, "tabSwitches", studentId);
                 await setDoc(studentRef, { count: increment(1), lastSwitchedAt: new Date() }, { merge: true });
-            } catch(e) {
+            } catch (e) {
                 console.error("Firestore error:", e);
             }
         };
@@ -773,8 +778,8 @@
                 let html = "<ul style='list-style: none; padding: 0;'>";
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    const dateStr = data.lastSwitchedAt && data.lastSwitchedAt.toDate 
-                        ? data.lastSwitchedAt.toDate().toLocaleTimeString() 
+                    const dateStr = data.lastSwitchedAt && data.lastSwitchedAt.toDate
+                        ? data.lastSwitchedAt.toDate().toLocaleTimeString()
                         : 'N/A';
                     html += `<li style='margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;'><strong>${doc.id}</strong>: ${data.count} switches (Last: ${dateStr})</li>`;
                 });
