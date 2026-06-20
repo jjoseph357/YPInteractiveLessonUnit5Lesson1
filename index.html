@@ -641,6 +641,12 @@
                 been replacing Christ in your life. Ask the Lord to recover that area. He's the God of recovery. He
                 doesn't give up on what's broken.
             </div>
+
+            <!-- Teacher Stats Area -->
+            <div style="margin-top: 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px;">
+                <button class="nav-btn" style="width: auto; padding: 0 20px; border-radius: 25px; margin: 0 auto; font-family: 'Outfit', sans-serif;" onclick="viewTabStats()">Teacher: View Tab Stats</button>
+                <div id="stats-results" style="margin-top: 20px; display: none; text-align: left; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; font-family: 'Outfit', sans-serif;"></div>
+            </div>
         </div>
 
     </div>
@@ -699,6 +705,9 @@
             if (document.hidden) {
                 // The user just left the tab (went to Instagram, etc.)
                 didTabSwitch = true;
+                if (window.trackTabSwitch) {
+                    window.trackTabSwitch();
+                }
             } else {
                 // The user just came back to the tab
                 if (didTabSwitch) {
@@ -720,6 +729,65 @@
 
         // Init
         updateIndicator();
+    </script>
+
+    <!-- Firebase SDK & Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            projectId: "yp-lesson5-tabs",
+            appId: "1:721037568070:web:9af96281994173e4254247",
+            storageBucket: "yp-lesson5-tabs.firebasestorage.app",
+            apiKey: "AIzaSyCZk0k7CUjCX16_R7UTnqu02dfEOe7oqiY",
+            authDomain: "yp-lesson5-tabs.firebaseapp.com",
+            messagingSenderId: "721037568070"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Identity
+        let studentId = localStorage.getItem('studentId');
+        if (!studentId) {
+            studentId = 'Student-' + Math.floor(Math.random() * 10000);
+            localStorage.setItem('studentId', studentId);
+        }
+
+        window.trackTabSwitch = async () => {
+            try {
+                const studentRef = doc(db, "tabSwitches", studentId);
+                await setDoc(studentRef, { count: increment(1), lastSwitchedAt: new Date() }, { merge: true });
+            } catch(e) {
+                console.error("Firestore error:", e);
+            }
+        };
+
+        window.viewTabStats = async () => {
+            const statsDiv = document.getElementById('stats-results');
+            statsDiv.innerHTML = "Loading...";
+            statsDiv.style.display = "block";
+            try {
+                const querySnapshot = await getDocs(collection(db, "tabSwitches"));
+                let html = "<ul style='list-style: none; padding: 0;'>";
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const dateStr = data.lastSwitchedAt && data.lastSwitchedAt.toDate 
+                        ? data.lastSwitchedAt.toDate().toLocaleTimeString() 
+                        : 'N/A';
+                    html += `<li style='margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;'><strong>${doc.id}</strong>: ${data.count} switches (Last: ${dateStr})</li>`;
+                });
+                html += "</ul>";
+                if (querySnapshot.empty) {
+                    html = "<p>No data yet.</p>";
+                }
+                statsDiv.innerHTML = html;
+            } catch (e) {
+                statsDiv.innerHTML = "Error loading stats. Check console.";
+                console.error("View stats error:", e);
+            }
+        };
     </script>
 
 </body>
