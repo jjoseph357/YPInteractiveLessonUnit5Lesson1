@@ -150,37 +150,31 @@
             font-style: italic;
         }
 
-        /* Outline Box */
-        .outline-box {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 24px;
-            font-size: 15px;
-            line-height: 1.6;
+        /* Outline Point Box (For reading together) */
+        .outline-point-box {
+            background: rgba(232, 184, 74, 0.06);
+            border-left: 4px solid var(--gold);
+            border-radius: 0 12px 12px 0;
+            padding: 20px 24px;
+            margin-bottom: 30px;
+            font-size: 18px;
+            line-height: 1.5;
             color: var(--cream);
         }
 
-        .outline-box h3 {
-            color: var(--gold-bright);
+        .outline-point-box .point-label {
             font-family: 'Fraunces', serif;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .outline-box .verse {
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .outline-box .point {
-            margin-bottom: 12px;
-        }
-
-        .outline-box .subpoint {
-            padding-left: 20px;
+            font-size: 22px;
+            color: var(--gold-bright);
+            font-weight: 700;
             margin-bottom: 8px;
-            color: rgba(245, 234, 212, 0.85);
+            display: block;
+        }
+
+        .outline-point-box .verse {
+            color: var(--muted);
+            font-size: 14px;
+            font-style: italic;
         }
 
         /* Quizzes */
@@ -254,6 +248,51 @@
             opacity: 0.6;
         }
 
+        /* Stats Box */
+        .stats-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(232, 184, 74, 0.1);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .stat-number {
+            font-family: 'Fraunces', serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--ember);
+            flex-shrink: 0;
+        }
+
+        .stat-text {
+            font-size: 15px;
+            color: var(--cream);
+            line-height: 1.5;
+        }
+
+        .stat-source {
+            font-size: 12px;
+            color: var(--muted);
+            display: block;
+            margin-top: 4px;
+        }
+
         /* Navigation Arrows */
         #nav {
             position: fixed;
@@ -319,37 +358,34 @@
             <p class="body-text">God doesn't throw broken things away. He recovers them. He restores them. He rebuilds.
             </p>
 
-            <div class="outline-box" style="margin-top: 30px;">
-                <h3>Lesson Outline</h3>
+            <div class="outline-point-box" style="margin-top: 30px;">
+                <span class="point-label">Lesson Outline</span>
                 <div class="point"><strong>I. God is a God of recovery</strong> <span class="verse">-Gen. 1:1-3; Ezra
                         9:9</span></div>
-
                 <div class="point"><strong>II. In Abraham, God chose a new race to be His corporate expression on the
                         earth</strong></div>
-                <div class="subpoint"><strong>A.</strong> God chose and called Abraham out of the land of idols <span
-                        class="verse">-Gen. 12:1-3; 13:14-17</span></div>
-                <div class="subpoint"><strong>B.</strong> They continually turned away from God, resulting in captivity
-                    <span class="verse">-Neh. 9:24-30; 2 Chron. 36:14-16</span></div>
-                <div class="subpoint" style="padding-left: 40px;">1. God called Israel out of Egypt into the good land
-                    <span class="verse">-Exo. 6:6-8</span></div>
-                <div class="subpoint" style="padding-left: 40px;">2. They followed idols and became divided <span
-                        class="verse">-1 Kings 12:26-30</span></div>
-                <div class="subpoint" style="padding-left: 40px;">3. Sank to the lowest condition, like the Canaanites
-                    <span class="verse">-2 Kings 17:7-23</span></div>
-                <div class="subpoint" style="padding-left: 40px;">4. Carried off into captivity <span class="verse">-2
-                        Kings 24-25</span></div>
-                <div class="subpoint"><strong>C.</strong> God recovered His people back to the land <span
+                <div style="padding-left: 20px;"><strong>A.</strong> God chose and called Abraham out of the land of
+                    idols <span class="verse">-Gen. 12:1-3; 13:14-17</span></div>
+                <div style="padding-left: 20px;"><strong>B.</strong> They continually turned away from God, resulting in
+                    captivity <span class="verse">-Neh. 9:24-30; 2 Chron. 36:14-16</span></div>
+                <div style="padding-left: 40px;">1. God called Israel out of Egypt into the good land <span
+                        class="verse">-Exo. 6:6-8</span></div>
+                <div style="padding-left: 40px;">2. They followed idols and became divided <span class="verse">-1 Kings
+                        12:26-30</span></div>
+                <div style="padding-left: 40px;">3. Sank to the lowest condition, like the Canaanites <span
+                        class="verse">-2 Kings 17:7-23</span></div>
+                <div style="padding-left: 40px;">4. Carried off into captivity <span class="verse">-2 Kings 24-25</span>
+                </div>
+                <div style="padding-left: 20px;"><strong>C.</strong> God recovered His people back to the land <span
                         class="verse">-Ezra 1:1-4</span></div>
-
                 <div class="point"><strong>III. The reality of God's recovery is the recovery of the church</strong>
                 </div>
-                <div class="subpoint"><strong>A.</strong> God established the church <span class="verse">-Eph. 1:23;
-                        2:19-22</span></div>
-                <div class="subpoint"><strong>B.</strong> The church fell into degradation and division <span
+                <div style="padding-left: 20px;"><strong>A.</strong> God established the church <span
+                        class="verse">-Eph. 1:23; 2:19-22</span></div>
+                <div style="padding-left: 20px;"><strong>B.</strong> The church fell into degradation and division <span
                         class="verse">-1 Cor. 1:10-13</span></div>
-                <div class="subpoint"><strong>C.</strong> The Lord came in to recover the church <span
+                <div style="padding-left: 20px;"><strong>C.</strong> The Lord came in to recover the church <span
                         class="verse">-Ezra 3:1, 10-12</span></div>
-
                 <div class="point"><strong>IV. We are in the Lord's recovery today</strong></div>
             </div>
         </div>
@@ -358,18 +394,19 @@
         <div class="page" id="page-1">
             <div class="header-tag">Opening Hook</div>
             <h2>What's the worst thing you've ever lost?</h2>
-            <p class="body-text">When I was in junior high, I lost my phone at a theme park. I spent <strong>three
-                    hours</strong> retracing my steps. Pure panic. Eventually, lost-and-found had it. I held that phone
-                like a newborn baby. I promised it I'd never let go again.</p>
-            <p class="body-text"><strong>I dropped it in a lake the next week.</strong> 📱💧</p>
+            <p class="body-text">Think about the panic of losing something valuable. The frantic searching. The relief
+                when you finally find it.</p>
             <p class="body-text">Today we're talking about God as a <strong>God of recovery</strong>. He doesn't lose
-                phones — but He does lose people. And what He recovers is <em>way</em> more valuable.</p>
+                phones or keys — but He does lose people. And what He recovers is <em>way</em> more valuable.</p>
         </div>
 
         <!-- PAGE 2: Point I -->
         <div class="page" id="page-2">
             <div class="header-tag">Point I</div>
-            <h1>God is a God of <span class="accent">Recovery</span></h1>
+            <div class="outline-point-box">
+                <span class="point-label">I. God is a God of recovery</span>
+                <span class="verse">-Gen. 1:1-3; Ezra 9:9</span>
+            </div>
             <p class="body-text">In Genesis 1, the earth <strong>became</strong> waste and emptiness. Darkness was over
                 the deep.</p>
             <p class="body-text">God didn't throw the planet in the cosmic trash. He <strong>recovered</strong> it. He
@@ -380,10 +417,16 @@
                 YOUR life when you mess up?</p>
         </div>
 
-        <!-- PAGE 3: Point IIA & IIB -->
+        <!-- PAGE 3: Point II.A & II.B -->
         <div class="page" id="page-3">
             <div class="header-tag">Point II.A & II.B</div>
-            <h2>From Abraham to Captivity</h2>
+            <div class="outline-point-box">
+                <span class="point-label">II. In Abraham, God chose a new race...</span>
+                <div style="margin-top:8px;"><strong>A.</strong> God chose and called Abraham out of the land of idols
+                    <span class="verse">-Gen. 12:1-3</span></div>
+                <div style="margin-top:8px;"><strong>B.</strong> They continually turned away from God, resulting in
+                    captivity <span class="verse">-Neh. 9:24-30; 2 Chron. 36:14-16</span></div>
+            </div>
             <p class="body-text"><strong>Abraham:</strong> Called out of Ur (a city of idols) to a new land to be God's
                 people.</p>
             <p class="body-text"><strong>Egypt to the Good Land:</strong> Israel was enslaved, but God rescued them
@@ -410,10 +453,14 @@
             </div>
         </div>
 
-        <!-- PAGE 5: Point IIC -->
+        <!-- PAGE 5: Point II.C -->
         <div class="page" id="page-5">
             <div class="header-tag">Point II.C</div>
-            <h1>The Return: <span class="accent">Ezra 1-3</span></h1>
+            <div class="outline-point-box">
+                <span class="point-label">II.C God recovered His people back to the land</span>
+                <span class="verse">-Ezra 1:1-4; 2 Chron. 36:22-23</span>
+            </div>
+            <h1 style="font-size: 2rem; margin-top: 20px;">The Return: <span class="accent">Ezra 1-3</span></h1>
             <p class="body-text">70 years of captivity. Then God stirs up a <strong>pagan king</strong>, Cyrus of
                 Persia, to issue a decree: "Go back. Rebuild the house of God."</p>
             <p class="body-text">When they arrived in Jerusalem, the city was in ruins. Weeds everywhere.</p>
@@ -439,7 +486,16 @@
         <!-- PAGE 7: Point III -->
         <div class="page" id="page-7">
             <div class="header-tag">Point III</div>
-            <h1>The Reality: <span class="accent">The Church</span></h1>
+            <div class="outline-point-box">
+                <span class="point-label">III. The reality of God's recovery is the recovery of the church</span>
+                <div style="margin-top:8px;"><strong>A.</strong> God established the church <span class="verse">-Eph.
+                        1:23; 2:19-22</span></div>
+                <div style="margin-top:8px;"><strong>B.</strong> The church fell into degradation and division <span
+                        class="verse">-1 Cor. 1:10-13</span></div>
+                <div style="margin-top:8px;"><strong>C.</strong> The Lord came in to recover the church <span
+                        class="verse">-Ezra 3:1, 10-12</span></div>
+            </div>
+            <h1 style="font-size: 2rem; margin-top: 20px;">The Reality: <span class="accent">The Church</span></h1>
             <p class="body-text">The Old Testament is a picture. The reality is the <strong>church</strong>.</p>
             <p class="body-text"><strong>Established:</strong> God established the church as His true habitation.</p>
             <p class="body-text"><strong>Degraded:</strong> The church fell. Christ was replaced by good works, dead
@@ -467,26 +523,52 @@
         <!-- PAGE 9: Point IV -->
         <div class="page" id="page-9">
             <div class="header-tag">Point IV</div>
-            <h1>We are in the Lord's <span class="accent">Recovery Today</span></h1>
-            <p class="body-text">Since the 1500s, the Lord has been recovering truth.</p>
-            <p class="body-text">In <strong>1922</strong>, Watchman Nee and others left divisive groups to meet on the
-                <strong>ground of oneness</strong> — just as Israel left Babylon for Jerusalem.</p>
-            <p class="body-text">We aren't starting a new denomination. We are <strong>returning</strong> to the
-                original ground.</p>
-            <p class="body-text"><em>The Jews waited 2,600 years to return to Israel as a nation. The ground was weedy,
-                    but they came back. Now we are clearing the weeds of tradition and building on the original
-                    foundation.</em></p>
+            <div class="outline-point-box">
+                <span class="point-label">IV. We are in the Lord's recovery today</span>
+            </div>
+            <p class="body-text">We don't have to look at history to see degradation—just look at modern Christianity.
+                The churches are degraded today. Believers have drifted into <strong>religion</strong>.</p>
+
+            <div class="stats-box">
+                <div class="stat-item">
+                    <div class="stat-number">35%</div>
+                    <div class="stat-text">
+                        of self-identified Christians read the Bible at least once a week outside of church.
+                        <span class="stat-source">Source: Pew Research Center, "Religion in Everyday Life" / "The Bible
+                            in America"</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">26%</div>
+                    <div class="stat-text">
+                        of Americans say they read the Bible 3 or more times per year.
+                        <span class="stat-source">Source: American Bible Society, State of the Bible 2023</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="body-text">The Word of God is collecting dust. If people aren't reading God's Word, what are they
+                doing? They are practicing <strong>religion</strong>.</p>
+            <p class="body-text"><strong>Religion is doing things FOR God, but WITHOUT God.</strong></p>
+            <p class="body-text">It's showing up to a building, singing songs, and listening to a professional
+                speak—then living the exact same way as the world for the other 6 days. God doesn't want religion. He
+                wants reality.</p>
         </div>
 
-        <!-- PAGE 10: Quiz 4 -->
+        <!-- PAGE 10: Quiz 4 (New) -->
         <div class="page" id="page-10">
             <div class="header-tag">Interactive Check 4</div>
-            <div class="quiz-question">What year did Watchman Nee begin meeting on the ground of oneness?</div>
+            <div class="quiz-question">Based on what we just read, what is the true definition of "religion" in degraded
+                churches?</div>
             <div class="quiz-options" id="quiz4">
-                <div class="quiz-option" data-correct="false"><span class="letter">A</span> 1517</div>
-                <div class="quiz-option" data-correct="false"><span class="letter">B</span> 1789</div>
-                <div class="quiz-option" data-correct="true"><span class="letter">C</span> 1922</div>
-                <div class="quiz-option" data-correct="false"><span class="letter">D</span> 2024</div>
+                <div class="quiz-option" data-correct="false"><span class="letter">A</span> Reading the Bible too much
+                </div>
+                <div class="quiz-option" data-correct="false"><span class="letter">B</span> Singing modern worship songs
+                </div>
+                <div class="quiz-option" data-correct="true"><span class="letter">C</span> Doing things for God, but
+                    without God</div>
+                <div class="quiz-option" data-correct="false"><span class="letter">D</span> Meeting in a church building
+                </div>
             </div>
         </div>
 
